@@ -1,78 +1,43 @@
 package ui;
 
 import java.util.Scanner;
-import model.Controladora;
 
 public class Executable {
+    public static void main(String[] args) {
+        Controladora controladora = new Controladora();
+        Scanner scanner = new Scanner(System.in);
+        boolean salir = false;
 
-    private Scanner reader;
-    private Controladora cont;
-    private static boolean flag;
+        while (!salir) {
+            System.out.println("\n1. Imprimir Tablero");
+            System.out.println("2. Jugada Maquina");
+            System.out.println("3. Jugada Humano");
+            System.out.println("4. Verificar Ganador");
+            System.out.println("5. Salir");
+            System.out.print("Seleccione una opcion: ");
+            int opcion = scanner.nextInt();
 
-    private Executable() {
-        reader = new Scanner(System.in);
-        cont = new Controladora();
-    }
-
-    public void run(boolean flag) {
-
-        flag = false;
-
-        while (!flag) {
-
-            System.out.println("\n\nBienvenido al menu:\n");
-            System.out.println("Opciones:\n" + "1. Imprimir tablero \n" + "2. Jugada de la máquina \n"
-                    + "3. Jugada de humano \n" + "4. Verificar ganador \n" + "5. Salir del programa \n");
-
-            int option = reader.nextInt();
-            reader.nextLine();
-
-            switch (option) {
+            switch (opcion) {
                 case 1:
-                    imprimirTablero();
+                    controladora.imprimirTablero();
                     break;
                 case 2:
-                    jugadaMaquina();
+                    controladora.jugadaMaquina();
                     break;
                 case 3:
-                    jugadaHumano();
+                    controladora.jugadaHumano();
                     break;
                 case 4:
-                    validarGanador();
+                    if (!controladora.hayGanador()) {
+                        System.out.println("No hay ganador todavia.");
+                    }
                     break;
                 case 5:
-                    flag = true;
-                    System.exit(0);
+                    salir = true;
                     break;
                 default:
-                    System.out.print("Por favor ingrese una opcion valida");
-                    continue;
+                    System.out.println("Opcion no valida.");
             }
-
         }
-
-    }
-
-    public static void main(String[] args) {
-        Executable mainApp = new Executable();
-        mainApp.run(flag);
-    }
-
-    private void imprimirTablero() {
-        System.out.println(cont.obtenerTableroComoString());
-    }
-
-    private void jugadaMaquina() {
-        cont.jugadaAleatoria();
-        System.out.println("La máquina ha realizado su jugada.");
-        imprimirTablero();
-    }
-
-    private void jugadaHumano() {
-        // Implementación de jugada de humano
-    }
-
-    private void validarGanador() {
-        // Implementación de la validación si alguien ya ganó el triqui
     }
 }
